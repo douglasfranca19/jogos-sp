@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import com.doufsp.jogossp.entitie.JogosEntitie;
 import com.doufsp.jogossp.repository.JogosRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class JogosService {
 
@@ -28,6 +30,14 @@ public class JogosService {
 
 	}
 
+	@Transactional
+	public JogosEntitie atualizaJogo(Long id, JogosEntitie jogosEntitie) {
+
+		JogosEntitie entity = jogosRepository.getReferenceById(id);
+		updateJogo(entity, jogosEntitie);
+		return jogosRepository.save(entity);
+	}
+
 	public void deletarPartida(Long id) {
 
 		jogosRepository.deleteById(id);
@@ -35,6 +45,15 @@ public class JogosService {
 
 	public void deletarAll() {
 		jogosRepository.deleteAll();
+	}
+
+	private void updateJogo(JogosEntitie entity, JogosEntitie jogosEntitie) {
+		entity.setCampeonato(jogosEntitie.getCampeonato());
+		entity.setCasaFora(jogosEntitie.getCasaFora());
+		entity.setPlacarAdv(jogosEntitie.getPlacarAdv());
+		entity.setPlacarSp(jogosEntitie.getPlacarSp());
+		entity.setTimes(jogosEntitie.getTimes());
+		entity.setVitoriaDerrotaEmpate(jogosEntitie.getVitoriaDerrotaEmpate());
 	}
 
 }
