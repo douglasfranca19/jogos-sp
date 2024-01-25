@@ -1,9 +1,9 @@
-package com.doufsp.jogossp.entitie;
+package com.doufsp.jogossp.dto;
 
 import java.io.Serializable;
 import java.util.Objects;
 
-public class Jogos implements Serializable {
+public class JogosDto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -12,18 +12,21 @@ public class Jogos implements Serializable {
 	private Integer placarAdv;
 	private String casaFora;
 	private String campeonato;
+	private String vitoriaDerrotaEmpate;
 
-	public Jogos() {
+	public JogosDto() {
 
 	}
 
-	public Jogos(String times, Integer placarSp, Integer placarAdv, String casaFora, String campeonato) {
+	public JogosDto(String times, Integer placarSp, Integer placarAdv, String casaFora, String campeonato,
+			String vitoriaDerrotaEmpate) {
 		super();
 		this.times = times;
 		this.placarSp = placarSp;
 		this.placarAdv = placarAdv;
 		this.casaFora = casaFora;
 		this.campeonato = campeonato;
+		this.vitoriaDerrotaEmpate = vitoriaDerrotaEmpate;
 	}
 
 	public String getTimes() {
@@ -66,9 +69,17 @@ public class Jogos implements Serializable {
 		this.campeonato = campeonato;
 	}
 
+	public String getVitoriaDerrotaEmpate() {
+		return vitoriaDerrotaEmpate;
+	}
+
+	public void setVitoriaDerrotaEmpate(String vitoriaDerrotaEmpate) {
+		this.vitoriaDerrotaEmpate = vitoriaDerrotaEmpate;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(campeonato, casaFora, placarAdv, placarSp, times);
+		return Objects.hash(campeonato, casaFora, placarAdv, placarSp, times, vitoriaDerrotaEmpate);
 	}
 
 	@Override
@@ -79,10 +90,11 @@ public class Jogos implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Jogos other = (Jogos) obj;
+		JogosDto other = (JogosDto) obj;
 		return Objects.equals(campeonato, other.campeonato) && Objects.equals(casaFora, other.casaFora)
 				&& Objects.equals(placarAdv, other.placarAdv) && Objects.equals(placarSp, other.placarSp)
-				&& Objects.equals(times, other.times);
+				&& Objects.equals(times, other.times)
+				&& Objects.equals(vitoriaDerrotaEmpate, other.vitoriaDerrotaEmpate);
 	}
 
 }
