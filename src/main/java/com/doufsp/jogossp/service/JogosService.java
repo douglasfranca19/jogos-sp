@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.doufsp.jogossp.entitie.JogosEntitie;
+import com.doufsp.jogossp.exceptions.IdNotFound;
 import com.doufsp.jogossp.repository.JogosRepository;
 
 import jakarta.transaction.Transactional;
@@ -22,7 +23,8 @@ public class JogosService {
 	}
 
 	public Optional<JogosEntitie> getJogosId(Long id) {
-		return jogosRepository.findById(id);
+
+		return Optional.ofNullable(jogosRepository.findById(id).orElseThrow(() -> new IdNotFound(id)));
 	}
 
 	public JogosEntitie insertJogos(JogosEntitie jogosEntitie) {
@@ -40,7 +42,12 @@ public class JogosService {
 
 	public void deletarPartida(Long id) {
 
+		if (!jogosRepository.existsById(id)) {
+			throw new IdNotFound(id);
+		}
+
 		jogosRepository.deleteById(id);
+
 	}
 
 	public void deletarAll() {

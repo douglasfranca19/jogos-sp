@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.doufsp.jogossp.dto.JogosDto;
 import com.doufsp.jogossp.entitie.JogosEntitie;
+import com.doufsp.jogossp.exceptions.IdNotFound;
 import com.doufsp.jogossp.service.JogosService;
 
 @RestController
@@ -69,9 +71,20 @@ public class JogosController {
 
 	}
 
+	
 	@DeleteMapping(value = "/deletar/{id}")
-	public void deletarPartida(@PathVariable Long id) {
-		jogosService.deletarPartida(id);
+	public ResponseEntity<String> deletarPartida(@PathVariable Long id) {
+
+		/*jogosService.deletarPartida(id);
+		return ResponseEntity.noContent().build();*/
+		
+		try {
+			jogosService.deletarPartida(id);
+			return new ResponseEntity<>("Id deletado: " + id, HttpStatus.OK);
+		} catch (IdNotFound e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+		}
+
 	}
 
 	@DeleteMapping(value = "/deletar/all")
