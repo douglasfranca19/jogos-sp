@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.doufsp.jogossp.dto.JogosDto;
+import com.doufsp.jogossp.dto.JogosEntradaDto;
 import com.doufsp.jogossp.entitie.JogosEntitie;
 import com.doufsp.jogossp.exceptions.IdNotFound;
 import com.doufsp.jogossp.service.JogosService;
@@ -33,6 +33,12 @@ public class JogosController {
 
 	}
 
+	/*@GetMapping(value = "/id/{id}")
+	public ResponseEntity<Optional<JogosEntitie>> getJogosId(@PathVariable Long id) {
+		return ResponseEntity.ok().body(jogosService.getJogosId(id));
+
+	}*/
+	
 	@GetMapping(value = "/id/{id}")
 	public ResponseEntity<Optional<JogosEntitie>> getJogosId(@PathVariable Long id) {
 		return ResponseEntity.ok().body(jogosService.getJogosId(id));
@@ -40,7 +46,7 @@ public class JogosController {
 	}
 
 	@PostMapping(value = "/insere")
-	public ResponseEntity<JogosEntitie> setJogos(@RequestBody JogosDto jogosDto) {
+	public ResponseEntity<JogosEntitie> setJogos(@RequestBody JogosEntradaDto jogosDto) {
 
 		JogosEntitie jogosEntitie = new JogosEntitie();
 
@@ -56,7 +62,7 @@ public class JogosController {
 	}
 
 	@PutMapping(value = "/atualizaId/{id}")
-	public ResponseEntity<JogosEntitie> atualizaJogo(@PathVariable Long id, @RequestBody JogosDto jogosDto) {
+	public ResponseEntity<JogosEntitie> atualizaJogo(@PathVariable Long id, @RequestBody JogosEntradaDto jogosDto) {
 
 		JogosEntitie jogosEntitie = new JogosEntitie();
 
@@ -75,9 +81,6 @@ public class JogosController {
 	@DeleteMapping(value = "/deletar/{id}")
 	public ResponseEntity<String> deletarPartida(@PathVariable Long id) {
 
-		/*jogosService.deletarPartida(id);
-		return ResponseEntity.noContent().build();*/
-		
 		try {
 			jogosService.deletarPartida(id);
 			return new ResponseEntity<>("Id deletado: " + id, HttpStatus.OK);

@@ -3,7 +3,7 @@ package com.doufsp.jogossp.dto;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class JogosDto implements Serializable {
+public class JogosEntradaDto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -14,11 +14,11 @@ public class JogosDto implements Serializable {
 	private String campeonato;
 	private String vitoriaDerrotaEmpate;
 
-	public JogosDto() {
+	public JogosEntradaDto() {
 
 	}
 
-	public JogosDto(String times, Integer placarSp, Integer placarAdv, String casaFora, String campeonato,
+	public JogosEntradaDto(String times, Integer placarSp, Integer placarAdv, String casaFora, String campeonato,
 			String vitoriaDerrotaEmpate) {
 		super();
 		this.times = times;
@@ -90,7 +90,7 @@ public class JogosDto implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		JogosDto other = (JogosDto) obj;
+		JogosEntradaDto other = (JogosEntradaDto) obj;
 		return Objects.equals(campeonato, other.campeonato) && Objects.equals(casaFora, other.casaFora)
 				&& Objects.equals(placarAdv, other.placarAdv) && Objects.equals(placarSp, other.placarSp)
 				&& Objects.equals(times, other.times)

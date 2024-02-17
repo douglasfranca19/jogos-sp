@@ -24,7 +24,14 @@ public class JogosService {
 
 	public Optional<JogosEntitie> getJogosId(Long id) {
 
-		return Optional.ofNullable(jogosRepository.findById(id).orElseThrow(() -> new IdNotFound(id)));
+		Optional<JogosEntitie> jogosId = jogosRepository.findById(id);
+
+		if (jogosId.isEmpty()) {
+			throw new IdNotFound("Id " + id + " não encontrado na base de dados");
+		}
+
+		return jogosId;
+
 	}
 
 	public JogosEntitie insertJogos(JogosEntitie jogosEntitie) {
@@ -43,7 +50,7 @@ public class JogosService {
 	public void deletarPartida(Long id) {
 
 		if (!jogosRepository.existsById(id)) {
-			throw new IdNotFound(id);
+			throw new IdNotFound("Id " + id + " não encontrado na base de dados");
 		}
 
 		jogosRepository.deleteById(id);
