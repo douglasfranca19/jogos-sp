@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.doufsp.jogossp.dto.JogosEntradaDto;
-import com.doufsp.jogossp.entitie.JogosEntitie;
+import com.doufsp.jogossp.entitie.Jogos_sp;
 import com.doufsp.jogossp.exceptions.IdNotFound;
 import com.doufsp.jogossp.service.JogosService;
 
@@ -28,27 +28,21 @@ public class JogosController {
 	private JogosService jogosService;
 
 	@GetMapping(value = "/todos")
-	public ResponseEntity<List<JogosEntitie>> getJogos() {
+	public ResponseEntity<List<Jogos_sp>> getJogos() {
 		return ResponseEntity.ok().body(jogosService.listJogos());
 
 	}
 
-	/*@GetMapping(value = "/id/{id}")
-	public ResponseEntity<Optional<JogosEntitie>> getJogosId(@PathVariable Long id) {
-		return ResponseEntity.ok().body(jogosService.getJogosId(id));
-
-	}*/
-	
 	@GetMapping(value = "/id/{id}")
-	public ResponseEntity<Optional<JogosEntitie>> getJogosId(@PathVariable Long id) {
+	public ResponseEntity<Optional<Jogos_sp>> getJogosId(@PathVariable Long id) {
 		return ResponseEntity.ok().body(jogosService.getJogosId(id));
 
 	}
 
 	@PostMapping(value = "/insere")
-	public ResponseEntity<JogosEntitie> setJogos(@RequestBody JogosEntradaDto jogosDto) {
+	public ResponseEntity<Jogos_sp> setJogos(@RequestBody JogosEntradaDto jogosDto) {
 
-		JogosEntitie jogosEntitie = new JogosEntitie();
+		Jogos_sp jogosEntitie = new Jogos_sp();
 
 		jogosEntitie.setTimes(jogosDto.getTimes());
 		jogosEntitie.setCampeonato(jogosDto.getCampeonato());
@@ -62,9 +56,9 @@ public class JogosController {
 	}
 
 	@PutMapping(value = "/atualizaId/{id}")
-	public ResponseEntity<JogosEntitie> atualizaJogo(@PathVariable Long id, @RequestBody JogosEntradaDto jogosDto) {
+	public ResponseEntity<Jogos_sp> atualizaJogo(@PathVariable Long id, @RequestBody JogosEntradaDto jogosDto) {
 
-		JogosEntitie jogosEntitie = new JogosEntitie();
+		Jogos_sp jogosEntitie = new Jogos_sp();
 
 		jogosEntitie.setTimes(jogosDto.getTimes());
 		jogosEntitie.setCampeonato(jogosDto.getCampeonato());
@@ -77,7 +71,6 @@ public class JogosController {
 
 	}
 
-	
 	@DeleteMapping(value = "/deletar/{id}")
 	public ResponseEntity<String> deletarPartida(@PathVariable Long id) {
 
@@ -95,4 +88,24 @@ public class JogosController {
 		jogosService.deletarAll();
 	}
 
+	@GetMapping(value = "/busca-tipo-resultado/{tipoResultado}")
+	public ResponseEntity<List<Jogos_sp>> buscaTipoResultado(@PathVariable String tipoResultado) {
+		return ResponseEntity.ok().body(jogosService.buscaTipoResultado(tipoResultado));
+
+	}
+
+	@GetMapping(value = "/busca-tipo-campeonato/{tipoCampeonato}")
+	public ResponseEntity<List<Jogos_sp>> buscaTipoCampeonato(@PathVariable String tipoCampeonato) {
+		return ResponseEntity.ok().body(jogosService.buscaTipoCampeonato(tipoCampeonato));
+	}
+
+	@GetMapping(value = "/busca-tipo-campo/{tipoCampo}")
+	public ResponseEntity<List<Jogos_sp>> buscaTipoCampo(@PathVariable String tipoCampo) {
+		return ResponseEntity.ok().body(jogosService.buscaTipoCampo(tipoCampo));
+	}
+
+	@GetMapping(value = "/busca-tipo-adv/{tipoAdv}")
+	public ResponseEntity<List<Jogos_sp>> buscaTipoAdversario(@PathVariable String tipoAdv) {
+		return ResponseEntity.ok().body(jogosService.buscaTipoAdversario(tipoAdv));
+	}
 }

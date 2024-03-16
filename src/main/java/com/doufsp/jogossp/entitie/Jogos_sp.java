@@ -9,7 +9,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "jogos_sp")
-public class JogosEntitie {
+public class Jogos_sp {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +33,7 @@ public class JogosEntitie {
 	@Column(name = "vitoria_derrota_empate", nullable = false, length = 500)
 	private String vitoriaDerrotaEmpate;
 
-	public JogosEntitie() {
+	public Jogos_sp() {
 	}
 
 	public String getTimes() {

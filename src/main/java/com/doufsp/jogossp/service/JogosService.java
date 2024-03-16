@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.doufsp.jogossp.entitie.JogosEntitie;
+import com.doufsp.jogossp.entitie.Jogos_sp;
 import com.doufsp.jogossp.exceptions.IdNotFound;
 import com.doufsp.jogossp.repository.JogosRepository;
 
@@ -18,13 +18,13 @@ public class JogosService {
 	@Autowired
 	private JogosRepository jogosRepository;
 
-	public List<JogosEntitie> listJogos() {
+	public List<Jogos_sp> listJogos() {
 		return jogosRepository.findAll();
 	}
 
-	public Optional<JogosEntitie> getJogosId(Long id) {
+	public Optional<Jogos_sp> getJogosId(Long id) {
 
-		Optional<JogosEntitie> jogosId = jogosRepository.findById(id);
+		Optional<Jogos_sp> jogosId = jogosRepository.findById(id);
 
 		if (jogosId.isEmpty()) {
 			throw new IdNotFound("Id " + id + " não encontrado na base de dados");
@@ -34,15 +34,15 @@ public class JogosService {
 
 	}
 
-	public JogosEntitie insertJogos(JogosEntitie jogosEntitie) {
+	public Jogos_sp insertJogos(Jogos_sp jogosEntitie) {
 		return jogosRepository.save(jogosEntitie);
 
 	}
 
 	@Transactional
-	public JogosEntitie atualizaJogo(Long id, JogosEntitie jogosEntitie) {
+	public Jogos_sp atualizaJogo(Long id, Jogos_sp jogosEntitie) {
 
-		JogosEntitie entity = jogosRepository.getReferenceById(id);
+		Jogos_sp entity = jogosRepository.getReferenceById(id);
 		updateJogo(entity, jogosEntitie);
 		return jogosRepository.save(entity);
 	}
@@ -61,13 +61,57 @@ public class JogosService {
 		jogosRepository.deleteAll();
 	}
 
-	private void updateJogo(JogosEntitie entity, JogosEntitie jogosEntitie) {
+	private void updateJogo(Jogos_sp entity, Jogos_sp jogosEntitie) {
 		entity.setCampeonato(jogosEntitie.getCampeonato());
 		entity.setCasaFora(jogosEntitie.getCasaFora());
 		entity.setPlacarAdv(jogosEntitie.getPlacarAdv());
 		entity.setPlacarSp(jogosEntitie.getPlacarSp());
 		entity.setTimes(jogosEntitie.getTimes());
 		entity.setVitoriaDerrotaEmpate(jogosEntitie.getVitoriaDerrotaEmpate());
+	}
+
+	public List<Jogos_sp> buscaTipoResultado(String tipoResultado) {
+
+		List<Jogos_sp> buscaResult = jogosRepository.buscaTipoResultado(tipoResultado);
+
+		if (buscaResult.isEmpty()) {
+			throw new IdNotFound("Dados não encontrados na base de dados");
+		}
+
+		return buscaResult;
+	}
+
+	public List<Jogos_sp> buscaTipoCampeonato(String tipoCampeonato) {
+
+		List<Jogos_sp> buscaCamp = jogosRepository.buscaTipoCampeonato(tipoCampeonato);
+
+		if (buscaCamp.isEmpty()) {
+			throw new IdNotFound("Dados não encontrados na base de dados");
+		}
+
+		return buscaCamp;
+	}
+
+	public List<Jogos_sp> buscaTipoCampo(String tipoCampo) {
+
+		List<Jogos_sp> buscaCamp = jogosRepository.buscaTipoCampo(tipoCampo);
+
+		if (buscaCamp.isEmpty()) {
+			throw new IdNotFound("Dados não encontrados na base de dados");
+		}
+
+		return buscaCamp;
+	}
+
+	public List<Jogos_sp> buscaTipoAdversario(String tipoAdv) {
+
+		List<Jogos_sp> buscaCamp = jogosRepository.buscaTipoAdversario(tipoAdv);
+
+		if (buscaCamp.isEmpty()) {
+			throw new IdNotFound("Dados não encontrados na base de dados");
+		}
+
+		return buscaCamp;
 	}
 
 }
